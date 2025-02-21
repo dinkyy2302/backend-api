@@ -3,6 +3,11 @@ const express = require("express");
 const app = express();
 app.use(express.json()); // Middleware to handle JSON requests
 
+// Default route to prevent "Cannot GET /"
+app.get("/", (req, res) => {
+    res.send("Backend is working!");
+});
+
 // GET Endpoint
 app.get("/bfhl", (req, res) => {
     res.status(200).json({ "operation_code": 1 });
@@ -34,5 +39,6 @@ app.post("/bfhl", (req, res) => {
     }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Use Render's assigned port
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
